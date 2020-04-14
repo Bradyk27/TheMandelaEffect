@@ -16,6 +16,9 @@
 
   <?php
      session_start();
+     require_once('login.php');
+     $error1 = "";
+     $error2 = "";
      $username = "EnterUsername";
      $password = "EnterPassword";
      if($_SESSION['type'] == 'user')
@@ -27,7 +30,7 @@
       header("Location: admin_page.php");
      }
 
-     require_once('login.php');
+    
      $conn = new mysqli($hn, $un, $pw, $db);
      $salt1 = "qm&h*";
      $salt2 = "pg!@";
@@ -58,12 +61,12 @@
        }
        else
        {
-        $error1 = "BAD PASSWORD";
+        $error1 = "Username and Password Combination do not match";
        }
       }
       else
       {
-       $error2 = "BAD USERNAME";
+       $error2 = "Username and Password Combination do not match";
       }
 
      }
@@ -73,26 +76,25 @@
   <h1>Welcome to <span style="font-style:italic; font-weight:bold; color: maroon">
   TheMandelaEffect</span>!</h1>
 
-<?php
-  echo"
-  <p style='color: red'>
-    $error1\n$error2
-  </p>";
 
-  echo " 
+  <p style='color: red'>
+   <?php echo $error1;
+   echo$error2;?>
+  </p>
+
   <form method='post' action='login_page.php'>
     <label>Username: </label>
-    <input type='text' name='username' value = $username> <br>
+    <input type='text' name='username' value = "<?php echo $username?>"> <br>
     <label>Password: </label>
-    <input type='password' name='password' value = $password> <br>
+    <input type='password' name='password' value = "<?php echo $password?>"> <br>
     <input type='submit' name='submit' value='Log in'>
-  </form>";
+  </form>
 
-?>
+
 
   <p style="font-style:italic">
-    Placeholder for "forgot password" link<br><br>
-    Placeholder for "create account" link
+  <a href="account.php">Create Account Link</a>
+  
   </p>
 
 </body>
