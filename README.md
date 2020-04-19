@@ -1,10 +1,6 @@
 # TheMandelaEffect
 DCSP Project
 
-TO DOS:
-1. Open phpMyAdmin, create TheMandelaEffect database
-
-
 Cart Page:
 - Check out
 - Remove items from cart (cart likely best implemented as a database)

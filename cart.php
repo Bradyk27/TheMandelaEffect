@@ -8,7 +8,6 @@
   <meta name="DCSP Project">
   <meta name="Brady Kruse & Others">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
   <style>
         input {
       margin-bottom: 0.5em;
@@ -70,40 +69,31 @@ td, th {
 </style>
 </head>
 
-<body>
+<bodys">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="cart.js"></script>
   <section class="mysection">
 <h1 class = 'title'>Welcome to The<span style="color:red; font-size:100px">M</span>andela<span style="color:red; font-size: 100px">E</span>ffect</h1>
 </section>
 <section class="mysection2">
 <h1 class = 'shop'>Shopping Cart</h1>
-  <?php 
-  session_start();
-  $username = $_SESSION['username'];
-    require_once('login.php');
-    $conn = new mysqli($hn, $un, $pw, $db);
-    $username = $_POST['username'];
-    $_SESSION['username'] = $username;
-    $query = "SELECT * FROM cart WHERE user = 'username'";
-    $result = $conn->query($query);
-    echo "Welcome back " .  $_SESSION['username'] . ", here's your cart items:";
-    echo "
-     <table>
-     <tr>
-     <th>Item ID</th><th>Item Name</th><th>quantity</th>
-     </tr>
-    ";
-    
-    /*while($row = $result->fetch_array()){
-     echo "
-      <tr>
-      <td>" . $row['itemID'] . "</td>
-      <td>" . $row['itemName'] . "</td>
-      <td>" . $row['quantity'] . "</td>
-      </tr>";}*/
-     echo "</table>";
-    echo"<input type='submit' name='submit' value='Checkout' class = 'button button2'>";
-   echo"</form>";
+  <?php
+  $cart = $_COOKIE['cart_id'];
+  $cart = explode(',', $cart);
+
+  $conn = new mysqli($hn, $un, $pw, $db);
+
+  echo "<p>Welcome Back Default User</p>";
+
+  for
+  $query = "SELECT * FROM items";
+  $result = $conn->query($query);
+
+
+  while($row = $result->fetch_array()){
+  echo
+  "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 onclick=AddToCart(" . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
+  }
 ?>
 </body>
 <a href='account.php' class = 'button button2'>Click here to view account</a>
