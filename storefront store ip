@@ -24,8 +24,22 @@ session_start();
 require_once('login.php');
 $conn = new mysqli($hn, $un, $pw, $db);
 
-if(!isset($_SESSION['username'])){
+if($_SESSION['type']=='guest'){
+  $_SESSION['username'] = $_SERVER['REMOTE_ADDR']; #On account log-in / log-out, need to compensate for guests. #Also, on account creation, if a table already exists for the IP, copy over their cart. Also need to make sure to create cart for all new users.
   $_SESSION['type'] = 'guest';
+  $query = "INSERT INTO users (username, type) VALUES('" . $_SESSION['username'] . "', 'guest')";
+  $result = $conn->query($query);
+  $query = "CREATE TABLE '" . $_SESSION['username'] . "'(
+    itemID     INTEGER,
+    image_link    VARCHAR(1028),
+    item_name   VARCHAR(256),
+    quantity    INTEGER,
+    PRIMARY KEY (itemID)
+  )";
+  $hash_password = hash('192.168.0.9', "$salt1$password$salt2");
+  echo "$hash_password";
+  $result = $conn->query($query);
+
   echo "<h1>Welcome Guest </h1>";
 }
 else{
@@ -41,7 +55,7 @@ while($row = $result->fetch_array()){
  echo
  "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 " . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
  echo
- "<button onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
+ "<button onclick='AddToCart(" . $row['itemID'] . ")'> Add to cart </button>";
  echo
  "<button onclick='RemoveFromCart(" . $row['itemID'] . ")'> Remove from cart </button>";
 }

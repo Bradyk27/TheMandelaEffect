@@ -129,9 +129,6 @@ input[type=text] {
 
   ?>
 
- 
-
-
   <p style='color: red'>
    <?php echo $error1;
    echo$error2;?>

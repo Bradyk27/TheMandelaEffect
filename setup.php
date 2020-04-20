@@ -13,7 +13,8 @@
     surname  VARCHAR(32),
     type     VARCHAR(10),
     username VARCHAR(32),
-    password VARCHAR(32)
+    password VARCHAR(32),
+    PRIMARY KEY(username)
   )";
   $result = $connection->query($query);
   if (!$result)
@@ -151,6 +152,37 @@
   echo 'Test items created and populated<br>';
 
   // ORDERS END
+
+
+  //Sample Cart
+
+  $connection = new mysqli($hn, $un, $pw, $db);
+
+  if ($connection->connect_error)
+    die($connection->connect_error);
+
+  $query = "DROP TABLE bsmith";
+  $result = $connection->query($query);
+  $query = "CREATE TABLE bsmith (
+    itemID     INTEGER,
+    image_link    VARCHAR(1028),
+    item_name   VARCHAR(256),
+    quantity    INTEGER,
+    PRIMARY KEY (itemID)
+  )";
+
+  $result = $connection->query($query);
+
+  if (!$result)
+    die($connection->error);
+
+  $query = "INSERT INTO bsmith SELECT * FROM items WHERE itemID=1";
+  $result = $connection->query($query);
+
+  if(!$result)
+    die($connection->error);
+
+  echo 'Test cart created and populated<br>';
 
 
   $connection->close();

@@ -26,6 +26,7 @@
   }
   else{
      $username = $_SESSION['username'];
+     
      require_once('login.php');
      $conn = new mysqli($hn, $un, $pw, $db);
      $query = "SELECT * FROM users WHERE username='$username'";

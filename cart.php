@@ -78,22 +78,50 @@ td, th {
 <section class="mysection2">
 <h1 class = 'shop'>Shopping Cart</h1>
   <?php
-  $cart = $_COOKIE['cart_id'];
-  $cart = explode(',', $cart);
+  session_start();
+  if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){
+    echo "Welcome back " . $_SESSION['username'] . "";
+    echo "<br>Here's your orders: ";
 
-  $conn = new mysqli($hn, $un, $pw, $db);
+    require_once 'login.php';
+    $connection = new mysqli($hn, $un, $pw, $db);
 
-  echo "<p>Welcome Back Default User</p>";
+    if ($connection->connect_error){
+      die($connection->connect_error);
+    }
 
-  for
-  $query = "SELECT * FROM items";
-  $result = $conn->query($query);
+    $query = "SELECT * FROM " . $_SESSION['username'] . "";
+    $result = $connection->query($query);
 
 
-  while($row = $result->fetch_array()){
-  echo
-  "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 onclick=AddToCart(" . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
+    while($row = $result->fetch_array()){ #Pretty this up, display quantities :)
+      echo
+      "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 onclick=AddToCart(" . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
+    }
+
   }
+
+  else{
+    $cart = $_SESSION['cart'];
+    $cart = explode(",", $cart);
+    require_once 'login.php';
+    $connection = new mysqli($hn, $un, $pw, $db);
+
+    foreach($cart as $index){
+      $query = "SELECT * FROM items WHERE itemID=" . $index . "";
+      $result = $connection->query($query);
+      while($row = $result->fetch_array()){ #Pretty this up, display quantities :)
+        echo
+        "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 onclick=AddToCart(" . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
+      }
+    }
+
+
+
+  }
+  
+
+
 ?>
 </body>
 <a href='account.php' class = 'button button2'>Click here to view account</a>
