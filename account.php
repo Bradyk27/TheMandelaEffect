@@ -78,18 +78,19 @@ input[type=password] {
 
 <body style="background-color:aliceblue;">
   <script src="account.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <section class = 'mysection'>
   <h1 class = 'title'>The<span style="color:red; font-size:100px">M</span>andela<span style="color:red; font-size: 100px">E</span>ffect</h1>
   </section>
 
-  <h1 style="color: steelblue; font-size: 50px;font-style: oblique"> Change Username / Change Password</h1>
+  <h1 style="color: steelblue; font-size: 50px;font-style: oblique"> Change Password</h1>
   <?php 
   session_start();
-  $user = $_SESSION['username'];
-
-  if ($user)
-  {
-    if($_POST['submit'])
+  require_once('login.php');
+  $conn = new mysqli($hn, $un, $pw, $db);
+  if(isset($_SESSION['username'])){ //Ability to update passwords if user is signed in
+    $error_password = "";
+    if(isset($_POST['submit_pass']))
     {
       $oldpassword = $_POST['oldpassword'];
       $newpassword = $_POST['newpassword'];
@@ -97,73 +98,118 @@ input[type=password] {
       $salt2 = "pg!@";
       $hasholdpassword = hash('ripemd128', "$salt1$oldpassword$salt2");
       $hashnewpassword = hash('ripemd128', "$salt1$newpassword$salt2");
-      require_once('login.php');
-      $conn = new mysqli($hn, $un, $pw, $db);
-      $query = "SELECT * FROM users";
-      $username = $_POST['username'];
-      $_SESSION['username'] = $username;
+
+      $query = "SELECT * FROM users WHERE username = '" . $_SESSION['username'] . "'";
       $result = $conn->query($query);
-      if($result->num_rows)
+      $row = $result->fetch_array();       
+      if($row['pw'] == $hasholdpassword)
       {
-       $row = $result->fetch_array();       
-       if($row['password'] == $hasholdpassword)
-       {
-        $querypass = "UPDATE users SET password ='hashnewpassword' WHERE username ='username'";
-       }
-       else{die("Not the correct old password");}
+      $error_password = "Password successfully changed!";
+      $query = "UPDATE users SET pw = '" . $hashnewpassword . "' WHERE (username = '" . $_SESSION['username'] . "' AND pw = '" . $hasholdpassword . "')";
+      $result = $conn->query($query);
       }
-      else{die("database connecting problem");}
+      else
+      {
+      $error_password = "Password is incorrect";
       }
-    else{
-    echo"
+    }
+    echo $error_password . "
     <form method='post' action='account.php'>
     <label>Old Password: </label>
     <input type='password' name='oldpassword' value = ''> <br>
     <label>New Password: </label>
     <input type='password' name='newpassword' value = ''> <br>
-    <input type='submit' name='submit' value='Confirm Change Password' class = 'button button2'>
+    <input type='submit' name='submit_pass' value='Confirm Change Password' class = 'button button2'>
     </form>
-    ";}
+    ";
   }
-
   else {
-    die("Log in to access this area");
-  }?>
+    echo "Log in to access this area";
+  }
+  ?>
+
+  <h1 style="color: steelblue; font-size: 50px;font-style: oblique"> Change Username</h1>
+  <?php 
+  if(isset($_SESSION['username'])){ //Ability to update username if user is signed in
+    $error_username = "";
+    if(isset($_POST['submit_user']))
+    {
+      $oldusername = $_POST['oldusername'];
+      $newusername = $_POST['newusername'];
+
+      $query = "SELECT * FROM users WHERE username = '" . $_SESSION['username'] . "'";
+      $result = $conn->query($query);
+      if($result->num_rows)
+      {
+       $row = $result->fetch_array();       
+       if($row['username'] == $oldusername)
+       {
+        $error_username = "Username successfully changed!";
+        $query = "UPDATE users SET username = '" . $newusername . "' WHERE (username = '" . $_SESSION['username'] . "')";
+        $result = $conn->query($query);
+
+        $query = "ALTER TABLE " . $oldusername . " RENAME TO " . $newusername . "";
+        $result = $conn->query($query);
+        $_SESSION['username'] = $newusername;
+       }
+       else
+       {
+        $error_username = "Username is incorrect";
+       }
+      }
+    }
+    echo $error_username . "
+    <form method='post' action='account.php'>
+    <label>Old Username: </label>
+    <input type='text' name='oldusername' value = ''> <br>
+    <label>New Username: </label>
+    <input type='text' name='newusername' value = ''> <br>
+    <input type='submit' name='submit_user' value='Confirm Change Username' class = 'button button2'>
+    </form>
+    ";
+  }
+  else {
+    echo "Log in to access this area";
+  }
+  ?>
+
   <h1 style="color: steelblue; font-size: 50px;font-style: oblique"> Add/Delete Payment methods</h1>
   <?php 
-  $user = $_SESSION['username'];
-
-  if ($user)
-  {
-    if($_POST['addcard'])
-    {
-
+  if(isset($_SESSION['username'])){ //Ability to add / remove payment info if signed in
+    $error_card = "";
+    $query = "SELECT * FROM payment_methods WHERE username='" . $_SESSION['username'] . "'";
+    $result = $conn->query($query);
+    if($result->num_rows){
+      echo "Here are your currently existing payment methods (click to remove)";
+      $i = 0;
+      while($row = $result->fetch_array()){
+        echo "<button id=" . $i . " onclick='RemovePaymentMethod(" . $i . ")' user= '" . $_SESSION['username'] . "'>" . $row['cardno'] . "</button>";
+        $i++;
       }
-    if($_POST['removecard']){
-      
     }
-    else{
-    echo"
-    <form>
-    <input type='submit' name='addcard' value='Add New Payment Method' class = 'button button2'>
-    <input type='submit' name='removecard' value='Delete Payment Method' class = 'button button2'>
+
+    if(isset($_POST['addcard'])){
+      $query = "INSERT INTO payment_methods VALUES ('" . $_SESSION['username'] . "' ,  '" . $_POST['card'] . "') ON DUPLICATE KEY UPDATE cardno=cardno";
+      $result = $conn->query($query);
+    }
+ 
+    echo $error_card . "
+    <form method='post' action='account.php'>
+    <label>Card #: </label>
+    <input type='text' name='card' value = ''> <br>
+    <input type='submit' name='addcard' value='Add Card' class = 'button button2'>
     </form>
-    ";}
+    ";
   }
-
-  else {
-    die("Log in to access this area");
+  else{
+    echo "Log in to access this area";
   }
-
   ?>
+
   <?php
   if($_SESSION['type'] == 'admin'){
     echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> Add/Delete Users</h1>";
      
-  $user = $_SESSION['username'];
-
-  if ($user)
-  {
     if($_POST['adduser'])
     {
       
@@ -180,9 +226,7 @@ input[type=password] {
     ";}
   }
 
-  else {
-    die("Log in to access this area");
-  }}?>
+  ?>
 </body>
 <p style="font-style:italic">
 <a href='logout_page.php' class = 'buttono button2'>Logout</a>

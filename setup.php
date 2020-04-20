@@ -13,7 +13,7 @@
     surname  VARCHAR(32),
     type     VARCHAR(10),
     username VARCHAR(32),
-    password VARCHAR(32),
+    pw VARCHAR(32),
     PRIMARY KEY(username)
   )";
   $result = $connection->query($query);
@@ -54,7 +54,7 @@
 
   function add_user($connection, $fn, $sn, $ty, $un, $pw)
   {
-    $query  = "INSERT INTO users (forename, surname, type, username, password)
+    $query  = "INSERT INTO users (forename, surname, type, username, pw)
       VALUES('$fn', '$sn', '$ty', '$un', '$pw')";
 
     $result = $connection->query($query);
@@ -183,6 +183,26 @@
     die($connection->error);
 
   echo 'Test cart created and populated<br>';
+
+
+  //Payment Methods
+  $connection = new mysqli($hn, $un, $pw, $db);
+
+  if ($connection->connect_error)
+    die($connection->connect_error);
+
+  $query = "DROP TABLE payment_methods";
+  $result = $connection->query($query);
+  $query = "CREATE TABLE payment_methods (
+    username     varchar(32),
+    cardno    VARCHAR(256),
+    PRIMARY KEY(cardno)
+  )";
+  $result = $connection->query($query);
+
+  echo 'Payment_methods created and populated<br>';
+
+
 
 
   $connection->close();

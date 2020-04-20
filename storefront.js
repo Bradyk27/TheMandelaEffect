@@ -1,6 +1,7 @@
+//STYLING: Display items better!
 cart = localStorage.getItem("cart").split(',');
 if(cart==null){
-    cart=[]
+    cart=[];
 }
 
 function AddToCart(item_id){

@@ -33,15 +33,12 @@
   transition-duration: 0.7s;
 }
 
-
 .button2:hover {
   box-shadow: 0 12px 16px 0 rgba(25,0,0,0.26),0 17px 50px 0 rgba(25,0,0,0.22);
 }
 .mysection2 {
    background-color: aliceblue;
    width: 100%;
-
-
 }
 
 td, th {
@@ -69,7 +66,7 @@ td, th {
 </style>
 </head>
 
-<bodys">
+<body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="cart.js"></script>
   <section class="mysection">
@@ -78,51 +75,44 @@ td, th {
 <section class="mysection2">
 <h1 class = 'shop'>Shopping Cart</h1>
   <?php
+  require_once 'login.php';
+  $connection = new mysqli($hn, $un, $pw, $db);
   session_start();
-  if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){
+
+  if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){ //Databased cart for user /admin
     echo "Welcome back " . $_SESSION['username'] . "";
     echo "<br>Here's your orders: ";
-
-    require_once 'login.php';
-    $connection = new mysqli($hn, $un, $pw, $db);
-
-    if ($connection->connect_error){
-      die($connection->connect_error);
-    }
-
     $query = "SELECT * FROM " . $_SESSION['username'] . "";
     $result = $connection->query($query);
-
-
-    while($row = $result->fetch_array()){ #Pretty this up, display quantities :)
+    while($row = $result->fetch_array()){
       echo
-      "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 onclick=AddToCart(" . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
+      "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>";
     }
+  }
 
+  elseif($_SESSION['type'] == 'guest'){ //Cookied cart for guests via Javascript
+    $cart = $_SESSION['cart'];
+    if($cart=="" || (empty($cart)) || (!isset($cart))){
+      echo "Visit the storefront to create a cart!";
+    }
+    else{
+      $cart = explode(",", $cart);
+      foreach($cart as $index){
+        $query = "SELECT * FROM items WHERE itemID=" . $index . "";
+        $result = $connection->query($query);
+        while($row = $result->fetch_array()){
+          echo
+          "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>"; 
+        }
+      }
+    }
   }
 
   else{
-    $cart = $_SESSION['cart'];
-    $cart = explode(",", $cart);
-    require_once 'login.php';
-    $connection = new mysqli($hn, $un, $pw, $db);
-
-    foreach($cart as $index){
-      $query = "SELECT * FROM items WHERE itemID=" . $index . "";
-      $result = $connection->query($query);
-      while($row = $result->fetch_array()){ #Pretty this up, display quantities :)
-        echo
-        "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 onclick=AddToCart(" . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
-      }
-    }
-
-
-
+    echo "Visit the storefront to create a cart!";
   }
-  
-
-
 ?>
+
 </body>
 <a href='account.php' class = 'button button2'>Click here to view account</a>
 <a href='storefront.php' class = 'button button2'>Click here to return to storefront</a>

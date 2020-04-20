@@ -1,22 +1,22 @@
-# TheMandelaEffect
+#TheMandelaEffect
 DCSP Project
 
-Cart Page:
-- Check out
-- Remove items from cart (cart likely best implemented as a database)
-- View account
+**TO DOS**
 
-Account Page:
-- Change username / password
-- Enter / remove payment methods
-- Add / remove users (as admin)
+FEATURES: DONE BY WEDNESDAY
+- Account Creation / Removal (Users & Admin) (Only admins can create admin accounts)
+- Checkout Page
+- Search Bar
+- Catalog Update (Admins)
+- View Orders (Users)
 
-Storefront:
-- Display items (catalog best implemented as database)
-- Add items to cart
-- View / edit catalog (as admin)
-- Searchbar (easily implemented via %searchquery% search through catalog database)
+STYLING: DONE BY FRIDAY
+- Javascripting & CSS Styling
+- Entry Sanitation & Appropriate errors
+- Cleaning up / commenting of code (movement to and from Javascript)
 
-General:
-- Spruce up html & css
-- Fix index errors
+BUGS: DONE BY SATURDAY
+- Load timing errors (#Refreshes & what not)
+- Guest cart occasional empty array
+- General session consistency
+- General debugging 

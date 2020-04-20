@@ -45,7 +45,6 @@
 </head>
 
 <body style = 'background-color: aliceblue;'>
-  <!-- php to handle logging out -->
   <?php
   session_start();
   session_unset();

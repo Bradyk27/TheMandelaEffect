@@ -75,18 +75,19 @@ input[type=text] {
      require_once('login.php');
      $error1 = "";
      $error2 = "";
+
      $username = "EnterUsername";
-     $password = "EnterPassword";
-     if($_SESSION['type'] == 'user')
+     $password = "";
+
+     if(isset($_SESSION['type']) && $_SESSION['type'] == 'user')
      {
       header("Location: user_page.php");
      }
-     if($_SESSION['type'] == 'admin')
+     if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin')
      {
       header("Location: admin_page.php");
      }
 
-    
      $conn = new mysqli($hn, $un, $pw, $db);
      $salt1 = "qm&h*";
      $salt2 = "pg!@";
@@ -102,7 +103,7 @@ input[type=text] {
       if($result->num_rows)
       {
        $row = $result->fetch_array();       
-       if($row['password'] == $hash_password)
+       if($row['pw'] == $hash_password)
        {
         if($row['type'] == 'admin')
         {
@@ -124,9 +125,7 @@ input[type=text] {
       {
        $error2 = "Username and Password Combination do not match";
       }
-
      }
-
   ?>
 
   <p style='color: red'>
@@ -141,8 +140,6 @@ input[type=text] {
     <input type='password' name='password' value = "<?php echo $password?>"> <br>
     <input type='submit' name='submit' value='Log in' class = 'button button2'>
   </form>
-
-
 
   <p style="font-style:italic">
   <a href="account.php" class = 'button button2'>Create Account Link</a>
