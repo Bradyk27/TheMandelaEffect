@@ -24,12 +24,13 @@ session_start();
 require_once('login.php');
 $conn = new mysqli($hn, $un, $pw, $db);
 
-if(!isset($_SESSION['username'])){
-  $_SESSION['type'] = 'guest';
-  echo "<h1>Welcome Guest </h1>";
+if(isset($_SESSION['username'])){
+  echo "<h1>Welcome " . $_SESSION['username'] . " </h1>";
 }
 else{
-echo "<h1>Welcome " . $_SESSION['username'] . " </h1>";
+  session_unset();
+  $_SESSION['type'] = 'guest';
+  echo "<h1>Welcome Guest </h1>";
 }
 
 echo "<p>We currently have the following items</p>";
