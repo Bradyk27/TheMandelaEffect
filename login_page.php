@@ -81,11 +81,11 @@ input[type=text] {
 
      if(isset($_SESSION['type']) && $_SESSION['type'] == 'user')
      {
-      header("Location: user_page.php");
+      header("Location: account.php");
      }
      if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin')
      {
-      header("Location: admin_page.php");
+      header("Location: account.php");
      }
 
      $conn = new mysqli($hn, $un, $pw, $db);
@@ -108,12 +108,12 @@ input[type=text] {
         if($row['type'] == 'admin')
         {
          $_SESSION['type'] = 'admin';
-         header("Location: admin_page.php");
+         header("Location: account.php");
         }
         else if($row['type'] == 'user')
         {
          $_SESSION['type'] = 'user';
-         header("Location: user_page.php");
+         header("Location: account.php");
         }
        }
        else

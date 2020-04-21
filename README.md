@@ -8,7 +8,6 @@ FEATURES: DONE BY WEDNESDAY
 - Checkout Page
 - Search Bar
 - Catalog Update (Admins)
-- View Orders (Users)
 
 STYLING: DONE BY FRIDAY
 - Javascripting & CSS Styling
