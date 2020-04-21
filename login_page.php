@@ -142,7 +142,7 @@ input[type=text] {
   </form>
 
   <p style="font-style:italic">
-  <a href="account.php" class = 'button button2'>Create Account Link</a>
+  <a href="create_account.php" class = 'button button2'>Create Account</a>
   </section>
   </p>
 <section class="mysection2">

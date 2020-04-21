@@ -251,7 +251,7 @@ input[type=password] {
     $salt2 = "pg!@";
     $password = $_POST['password_admin'];
     $hash_password = hash('ripemd128', "$salt1$password$salt2");
-    
+
     $query = "INSERT INTO users(username, pw, type) VALUES('" . $_POST['username_admin'] . "','" . $hash_password . "','" . $_POST['type_admin'] . "')";
     $result = $conn->query($query);
     $query = "CREATE TABLE " . $_POST['username_admin'] . "(
@@ -277,16 +277,16 @@ input[type=password] {
   <input type='submit' name='add_user' value='Add User' class = 'button button2'>
   </form>
   ";
-}
+  }
 
-elseif(isset($_SESSION['type']) && $_SESSION['type']=='user'){
+  elseif(isset($_SESSION['type']) && $_SESSION['type']=='user'){
   echo"
   <button onclick = 'DeleteAccountUser()' class = 'button button2'>Delete Account?</button>
   ";
-}
+  }
   ?>
-</body>
-<p style="font-style:italic">
+  </body>
+  <p style="font-style:italic">
 <a href='logout_page.php' class = 'buttono button2'>Logout</a>
 <a href='storefront.php' class = 'buttono button2'>Click here to return to storefront</a>
 </html>
