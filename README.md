@@ -4,11 +4,9 @@ DCSP Project
 **TO DOS**
 
 FEATURES: DONE BY WEDNESDAY
-- Account Creation / Removal (Users & Admin) (Only admins can create admin accounts)
 - Checkout Page
 - Search Bar
 - Catalog Update (Admins)
-- View Orders (Users)
 
 STYLING: DONE BY FRIDAY
 - Javascripting & CSS Styling
@@ -20,3 +18,4 @@ BUGS: DONE BY SATURDAY
 - Guest cart occasional empty array
 - General session consistency
 - General debugging 
+- Databse consistency

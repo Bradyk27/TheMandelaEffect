@@ -212,29 +212,87 @@ input[type=password] {
   }
   ?>
 
-  <?php
-  if($_SESSION['type'] == 'admin'){
-    echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> Add/Delete Users</h1>";
-     
-    if($_POST['adduser'])
-    {
-      
+  <h1 style="color: steelblue; font-size: 50px;font-style: oblique"> View Orders</h1>
+  <?php 
+  if(isset($_SESSION['username'])){ //Ability to add / remove payment info if signed in
+    $query = "SELECT * FROM orders WHERE username='" . $_SESSION['username'] . "'";
+    $result = $conn->query($query);
+    if($result->num_rows){
+      echo "Here are your currently existing orders (click to remove)<br>";
+      while($row = $result->fetch_array()){
+        echo "<button onclick='RemoveOrder(" . $row['orderID'] . ")'> Total Price: " . $row['orderTotal'] . "<br>Quantity: " . $row['quantity'] . "<br>Shipping: " . $row['shipping'] . "</button><br>";
       }
-    if($_POST['removeuser']){
-      
     }
     else{
-    echo"
-    <form>
-    <input type='submit' name='adduser' value='Add New User' class = 'button button2'>
-    <input type='submit' name='removeuser' value='Remove User' class = 'button button2'>
-    </form>
-    ";}
+      echo "You have no orders! <br><br>";
+    }
+ 
+    ;
+  }
+  else{
+    echo "Log in to access this area";
+  }
+  ?>
+
+
+  <?php
+  if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin'){
+    echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> Add/Delete Users</h1>";
+    $query = "SELECT * FROM users";
+    $result = $conn->query($query);
+    if($result->num_rows){
+      echo "Here are your currently existing users (click to remove)<br>";
+      $i = 0;
+      while($row = $result->fetch_array()){
+        echo "<button id = " . $i . " onclick='DeleteAccountAdmin(" . $i . ")'>" . $row['username'] . "</button><br>";
+        $i++;
+      }
+    }
+    else{
+      echo "You have no users! <br><br>";
+    }
+  
+  if(isset($_POST['add_user'])){
+    $salt1 = "qm&h*";
+    $salt2 = "pg!@";
+    $password = $_POST['password_admin'];
+    $hash_password = hash('ripemd128', "$salt1$password$salt2");
+
+    $query = "INSERT INTO users(username, pw, type) VALUES('" . $_POST['username_admin'] . "','" . $hash_password . "','" . $_POST['type_admin'] . "')";
+    $result = $conn->query($query);
+    $query = "CREATE TABLE " . $_POST['username_admin'] . "(
+      itemID     INTEGER,
+      image_link    VARCHAR(1028),
+      item_name   VARCHAR(256),
+      quantity    INTEGER,
+      PRIMARY KEY (itemID)
+    )";
+  
+    $result = $conn->query($query);
+  }
+  
+  echo"
+  <br>
+  <form method='post' action='account.php'>
+  <label>Username: </label>
+  <input type='text' name='username_admin' value = ''> <br>
+  <label>Password: </label>
+  <input type='password' name='password_admin' value = ''> <br>
+  <label>User Type (user / admin): </label>
+  <input type='text' name='type_admin' value = ''> <br>
+  <input type='submit' name='add_user' value='Add User' class = 'button button2'>
+  </form>
+  ";
   }
 
+  elseif(isset($_SESSION['type']) && $_SESSION['type']=='user'){
+  echo"
+  <button onclick = 'DeleteAccountUser()' class = 'button button2'>Delete Account?</button>
+  ";
+  }
   ?>
-</body>
-<p style="font-style:italic">
+  </body>
+  <p style="font-style:italic">
 <a href='logout_page.php' class = 'buttono button2'>Logout</a>
 <a href='storefront.php' class = 'buttono button2'>Click here to return to storefront</a>
 </html>

@@ -87,11 +87,11 @@ input[type=text] {
 
      if(isset($_SESSION['type']) && $_SESSION['type'] == 'user')
      {
-      header("Location: storefront.php");
+      header("Location: account.php");
      }
      if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin')
      {
-      header("Location: storefront.php");
+      header("Location: account.php");
      }
 
      $conn = new mysqli($hn, $un, $pw, $db);
@@ -114,12 +114,12 @@ input[type=text] {
         if($row['type'] == 'admin')
         {
          $_SESSION['type'] = 'admin';
-         header("Location: storefront.php");
+         header("Location: account.php");
         }
         else if($row['type'] == 'user')
         {
          $_SESSION['type'] = 'user';
-         header("Location: storefront.php");
+         header("Location: account.php");
         }
        }
        else
@@ -148,7 +148,7 @@ input[type=text] {
   </form>
 
   <p style="font-style:italic">
-  <a href="account.php" class = 'button button2'>Create Account Link</a>
+  <a href="create_account.php" class = 'button button2'>Create Account</a>
   </section>
   </p>
 <section class="mysection2">
