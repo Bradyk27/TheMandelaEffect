@@ -15,7 +15,7 @@
    height: 85px;
 }
  .button {
-  background-color: #87CEFA; /* Green */
+  background-color: #87CEFA;
   border: none;
   font-weight: bold;
   color: navy;
@@ -28,14 +28,25 @@
   cursor: pointer;
   display: flex; 
   justify-content: center; 
-  -webkit-transition-duration: 0.7s; /* Safari */
+  -webkit-transition-duration: 0.7s; 
   transition-duration: 0.7s;
 }
 .title{
-  color: #87CEFA; font-family: 'Trocchi', serif; font-size: 80px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; 
+  color: #87CEFA; 
+  font-family: 'Trocchi', serif; 
+  font-size: 80px; 
+  font-weight: bold; 
+  letter-spacing: -1px; 
+  line-height: 1; 
+  text-align: center; 
 }
 .state{
-  color: #000000; font-family: 'Trocchi', serif; font-size: 65px; font-weight: bold;text-align: center; font-style: italic; 
+  color: #000000; 
+  font-family: 'Trocchi', serif; 
+  font-size: 65px; 
+  font-weight: bold;
+  text-align: center; 
+  font-style: italic; 
 }
 
 .button2:hover {

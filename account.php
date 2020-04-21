@@ -25,10 +25,16 @@
    height: 85px;
 }
     .title{
-  color: #87CEFA; font-family: 'Trocchi', serif; font-size: 80px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; 
+  color: #87CEFA; 
+  font-family: 'Trocchi', serif; 
+  font-size: 80px; 
+  font-weight: bold; 
+  letter-spacing: -1px; 
+  line-height: 1; 
+  text-align: center; 
 }
   .button {
-  background-color: #87CEFA; /* Green */
+  background-color: #87CEFA; 
   border: none;
   font-weight: bold;
   color: navy;
@@ -39,11 +45,11 @@
   font-size: 16px;
   margin: 8px 4px;
   cursor: pointer;
-  -webkit-transition-duration: 0.7s; /* Safari */
+  -webkit-transition-duration: 0.7s; 
   transition-duration: 0.7s;
 }
 .buttono {
-  background-color: #87CEFA; /* Green */
+  background-color: #87CEFA;
   border: none;
   font-weight: bold;
   color: navy;
@@ -56,7 +62,7 @@
   cursor: pointer;
   display: flex; 
   justify-content: center; 
-  -webkit-transition-duration: 0.7s; /* Safari */
+  -webkit-transition-duration: 0.7s; 
   transition-duration: 0.7s;
 }
 .button2:hover {

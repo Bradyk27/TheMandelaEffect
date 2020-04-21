@@ -21,7 +21,7 @@
 
 }
   .button {
-  background-color: #87CEFA; /* Green */
+  background-color: #87CEFA;
   border: none;
   font-weight: bold;
   color: navy;
@@ -32,12 +32,18 @@
   font-size: 16px;
   margin: 8px 4px;
   cursor: pointer;
-  -webkit-transition-duration: 0.7s; /* Safari */
+  -webkit-transition-duration: 0.7s;
   transition-duration: 0.7s;
 }
 
 .title{
-  color: #87CEFA; font-family: 'Trocchi', serif; font-size: 80px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; 
+  color: #87CEFA; 
+  font-family: 'Trocchi', serif; 
+  font-size: 80px; 
+  font-weight: bold; 
+  letter-spacing: -1px; 
+  line-height: 1; 
+  text-align: center; 
 }
 
 .button2:hover {
@@ -81,11 +87,11 @@ input[type=text] {
 
      if(isset($_SESSION['type']) && $_SESSION['type'] == 'user')
      {
-      header("Location: user_page.php");
+      header("Location: storefront.php");
      }
      if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin')
      {
-      header("Location: admin_page.php");
+      header("Location: storefront.php");
      }
 
      $conn = new mysqli($hn, $un, $pw, $db);
@@ -108,12 +114,12 @@ input[type=text] {
         if($row['type'] == 'admin')
         {
          $_SESSION['type'] = 'admin';
-         header("Location: admin_page.php");
+         header("Location: storefront.php");
         }
         else if($row['type'] == 'user')
         {
          $_SESSION['type'] = 'user';
-         header("Location: user_page.php");
+         header("Location: storefront.php");
         }
        }
        else

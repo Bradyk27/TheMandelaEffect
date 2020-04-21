@@ -61,8 +61,18 @@ td, th {
   margin-right: auto;
   width: 50%;
 }
-.shop{color: red; font-family: 'Trocchi',serif; font-size: 36px; font-weight: 1000; line-height: 88px;text-align: left; }
-.title{color: #87CEFA; font-family: 'Trocchi', serif; font-size: 80px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+.shop{color: red; 
+font-family: 'Trocchi',serif; 
+font-size: 36px; font-weight: 1000; 
+line-height: 88px;
+text-align: left; }
+.title{color: #87CEFA; 
+font-family: 'Trocchi', serif; 
+font-size: 80px; 
+font-weight: bold; 
+letter-spacing: -1px; 
+line-height: 1; 
+text-align: center; }
 </style>
 </head>
 
@@ -80,8 +90,8 @@ td, th {
   session_start();
 
   if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){ //Databased cart for user /admin
-    echo "Welcome back " . $_SESSION['username'] . "";
-    echo "<br>Here's your orders: ";
+    echo "<p style = 'font-family: Impact, Charcoal, sans-serif; font-size: 25px; color: navy;'>Welcome back " . $_SESSION['username'] . "</p>";
+    echo "<br><p style = 'font-family: Impact, Charcoal, sans-serif; font-size: 25px; color: navy;'>Here's your orders: </p>";
     $query = "SELECT * FROM " . $_SESSION['username'] . "";
     $result = $connection->query($query);
     while($row = $result->fetch_array()){
