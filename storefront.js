@@ -7,7 +7,7 @@ if(cart==null){
 function AddToCart(item_id){
     var user = document.getElementById("AddToCart").getAttribute("user");
     if(user=='guest'){
-        cart.push(item_id);
+        cart.push(item_id.toString());
         localStorage.setItem("cart", cart);
         return;
     }
@@ -22,7 +22,7 @@ function AddToCart(item_id){
 function RemoveFromCart(item_id){
     var user = document.getElementById("AddToCart").getAttribute("user");
     if(user=='guest'){
-        cart.splice(cart.indexOf(item_id), 1);
+        cart.splice(cart.indexOf(item_id.toString()), 1);
         localStorage.setItem("cart", cart);
         return;
     }

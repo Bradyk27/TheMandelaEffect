@@ -16,7 +16,8 @@ if(isset($_POST['add_user'])){
         itemID     INTEGER,
         image_link    VARCHAR(1028),
         item_name   VARCHAR(256),
-        quantity    INTEGER,
+        quantity    INTEGER DEFAULT(1),
+        price   DECIMAL(4,2),
         PRIMARY KEY (itemID)
     )";
     $result = $conn->query($query);

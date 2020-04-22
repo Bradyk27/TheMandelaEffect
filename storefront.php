@@ -109,7 +109,8 @@ $result = $conn->query($query);
 
 while($row = $result->fetch_array()){
  echo
- "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 " . $row['itemID'] . ")></img>"; #STYLING!! #Need buttons for remove from cart / add to cart
+ "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128 " . $row['itemID'] . ")></img>";
+ echo "$" . $row['price'];
  echo
  "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
  echo

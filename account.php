@@ -297,6 +297,9 @@ input[type=password] {
 if(isset($_SESSION['username'])){
   echo "<a href='logout_page.php' class = 'buttono button2'>Logout</a>";
 }
+else{
+  echo "<a href='login_page.php' class = 'buttono button2'>Login</a>";
+}
 ?>
 <a href='storefront.php' class = 'buttono button2'>Click here to return to storefront</a>
 </html>

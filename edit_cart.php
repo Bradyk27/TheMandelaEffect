@@ -16,7 +16,7 @@
   }
   
   function add($connection){
-    $query = "INSERT INTO " . $_SESSION['username'] . " SELECT * FROM items WHERE itemID=" . $_REQUEST['item'] . " ON DUPLICATE KEY UPDATE " . $_SESSION['username'] . ".quantity=" . $_SESSION['username'] . ".quantity+1";
+    $query = "INSERT INTO " . $_SESSION['username'] . "(itemID, image_link, item_name, price) SELECT itemID, image_link, item_name, price FROM items WHERE itemID=" . $_REQUEST['item'] . " ON DUPLICATE KEY UPDATE " . $_SESSION['username'] . ".quantity=" . $_SESSION['username'] . ".quantity+1";
     $result = $connection->query($query);
   }
 

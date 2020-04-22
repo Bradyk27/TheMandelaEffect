@@ -94,32 +94,47 @@ text-align: center; }
     echo "<br><p style = 'font-family: Impact, Charcoal, sans-serif; font-size: 25px; color: navy;'>Here's your orders: </p>";
     $query = "SELECT * FROM " . $_SESSION['username'] . "";
     $result = $connection->query($query);
-    while($row = $result->fetch_array()){
-      echo
-      "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>";
+    if($result->num_rows){
+      while($row = $result->fetch_array()){
+        echo
+        "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>";
+        echo "Quantity: " . $row['quantity'];
+        echo "Price: " . $row['price'];
+        echo
+        "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
+        echo
+        "<button class = 'button button2' onclick='RemoveFromCart(" . $row['itemID'] . ")'> Remove from cart </button>";
+      }
+      echo "<a href='checkout.php' class = 'button button2'>Click here to checkout</a>";
+    }
+    else{
+      echo "Visit the storefront to create a cart!";
     }
   }
 
   elseif($_SESSION['type'] == 'guest'){ //Cookied cart for guests via Javascript
-    if((empty($cart)) || (!isset($cart))){
-      echo "Visit the storefront to create a cart!";
-    }
-    else{
-      $cart = $_SESSION['cart'];
-      $cart = explode(",", $cart);
-      foreach($cart as $index){
-        $query = "SELECT * FROM items WHERE itemID=" . $index . "";
-        $result = $connection->query($query);
-        while($row = $result->fetch_array()){
-          echo
-          "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>"; 
-        }
+    $cart = $_SESSION['cart'];
+    $cart = explode(",", $cart);
+    $cart_temp = array_count_values($cart);
+    foreach(array_keys($cart_temp) as $index){
+      $query = "SELECT * FROM items WHERE itemID=" . $index . "";
+      $result = $connection->query($query);
+      while($row = $result->fetch_array()){
+        echo
+        "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>"; 
+        echo "Quantity: " . $cart_temp[$index];
+        echo "<br>Price: " . $row['price'];
+        echo
+        "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
+        echo
+        "<button class = 'button button2' onclick='RemoveFromCart(" . $row['itemID'] . ")'> Remove from cart </button>";
       }
     }
+    echo "<a href='checkout.php' class = 'button button2'>Click here to checkout</a>";
   }
 
   else{
-    echo "Visit the storefront to create a cart!";
+    echo "Visit the storefront to create a cart!"; //Guest types are set when they visit the storefront, so if they haven't done yet they will be kindly instructed to.
   }
 ?>
 

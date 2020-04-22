@@ -127,7 +127,8 @@
     itemID     VARCHAR(32),
     image_link    VARCHAR(1028),
     item_name   VARCHAR(256),
-    quantity    INTEGER
+    quantity    INTEGER,
+    price  DECIMAL(4,2)
   )";
 
   $result = $connection->query($query);
@@ -135,13 +136,13 @@
   if (!$result)
     die($connection->error);
 
-  add_item($connection, "0001", "https://images-na.ssl-images-amazon.com/images/I/91s-zQ3T81L.jpg", "Berenstein Bears Book", 1);
-  add_item($connection, "0002", "https://media1.s-nbcnews.com/i/newscms/2019_34/2977421/190819-think-chick-fil-a-popeyes-ew-524p_c2ab1236d77261ba150bba22caaf78b1.jpg", "Motherfucking Chick fil a sandwich", 1);
+  add_item($connection, "0001", "https://images-na.ssl-images-amazon.com/images/I/91s-zQ3T81L.jpg", "Berenstein Bears Book", 1, 10.00);
+  add_item($connection, "0002", "https://media1.s-nbcnews.com/i/newscms/2019_34/2977421/190819-think-chick-fil-a-popeyes-ew-524p_c2ab1236d77261ba150bba22caaf78b1.jpg", "Motherfucking Chick fil a sandwich", 1, 25.25);
 
-  function add_item($connection, $oid, $link, $name, $qty)
+  function add_item($connection, $oid, $link, $name, $qty, $price)
   {
-    $query = "INSERT INTO items (itemID, image_link, item_name, quantity)
-      VALUES ('$oid', '$link', '$name', '$qty')";
+    $query = "INSERT INTO items (itemID, image_link, item_name, quantity, price)
+      VALUES ('$oid', '$link', '$name', '$qty' , '$price')";
 
     $result = $connection->query($query);
 
@@ -167,7 +168,8 @@
     itemID     INTEGER,
     image_link    VARCHAR(1028),
     item_name   VARCHAR(256),
-    quantity    INTEGER,
+    quantity    INTEGER DEFAULT(1),
+    price       DECIMAL(4,2),
     PRIMARY KEY (itemID)
   )";
 
@@ -178,7 +180,8 @@
 
   $query = "INSERT INTO bsmith SELECT * FROM items WHERE itemID=1";
   $result = $connection->query($query);
-
+  $query = "UPDATE bsmith SET quantity = 1 WHERE itemID = 1";
+  $result = $connection->query($query);
   if(!$result)
     die($connection->error);
 
