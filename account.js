@@ -2,18 +2,15 @@
 //STYLING: Make it look all pretty and stuff :))
 //FEATURE: Entry sanitation (espeically on user creation)
 //FEATURE: Alert on duplicate cards / nonexisting card / duplicate users
-//FEATURE: DELETE / ADD ACCOUNT FOR ADMIN & USER
 //BUG: ERROR MESSAGES NOT RESETTING EVERY TIME
 //BUG: Make sure carts and such are created for new users. Are they automatically created?
 
 function RemovePaymentMethod(buttonid){ //Removes payment method by posting to a edit_payment.php which handles server side
-    var user = document.getElementById(buttonid).getAttribute("user");
     var cardno = document.getElementById(buttonid).innerHTML;
     $.post("edit_payment.php",
     {card: cardno,
      type: 'payment'},
     function(result){
-        alert(result);
         alert(cardno + " Removed!");
         location.reload();
         return false;

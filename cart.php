@@ -89,7 +89,8 @@ text-align: center; }
   $connection = new mysqli($hn, $un, $pw, $db);
   session_start();
 
-  if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){ //Databased cart for user /admin
+  if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){ //Databased cart for user / admin
+    $total = 0;
     echo "<p style = 'font-family: Impact, Charcoal, sans-serif; font-size: 25px; color: navy;'>Welcome back " . $_SESSION['username'] . "</p>";
     echo "<br><p style = 'font-family: Impact, Charcoal, sans-serif; font-size: 25px; color: navy;'>Here's your orders: </p>";
     $query = "SELECT * FROM " . $_SESSION['username'] . "";
@@ -99,13 +100,14 @@ text-align: center; }
         echo
         "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>";
         echo "Quantity: " . $row['quantity'];
-        echo "Price: " . $row['price'];
+        echo "<br>Price: " . $row['price']; $total += $row['price'];
         echo
         "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
         echo
         "<button class = 'button button2' onclick='RemoveFromCart(" . $row['itemID'] . ")'> Remove from cart </button>";
       }
-      echo "<a href='checkout.php' class = 'button button2'>Click here to checkout</a>";
+      echo "Total: $" . $total;
+      echo "<a href='checkout_page.php' class = 'button button2'>Click here to checkout</a>";
     }
     else{
       echo "Visit the storefront to create a cart!";
@@ -113,24 +115,31 @@ text-align: center; }
   }
 
   elseif($_SESSION['type'] == 'guest'){ //Cookied cart for guests via Javascript
-    $cart = $_SESSION['cart'];
-    $cart = explode(",", $cart);
-    $cart_temp = array_count_values($cart);
-    foreach(array_keys($cart_temp) as $index){
-      $query = "SELECT * FROM items WHERE itemID=" . $index . "";
-      $result = $connection->query($query);
-      while($row = $result->fetch_array()){
-        echo
-        "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>"; 
-        echo "Quantity: " . $cart_temp[$index];
-        echo "<br>Price: " . $row['price'];
-        echo
-        "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
-        echo
-        "<button class = 'button button2' onclick='RemoveFromCart(" . $row['itemID'] . ")'> Remove from cart </button>";
+    if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
+      $total = 0;
+      $cart = $_SESSION['cart'];
+      $cart = explode(",", $cart);
+      $cart_temp = array_count_values($cart);
+      foreach(array_keys($cart_temp) as $index){
+        $query = "SELECT * FROM items WHERE itemID=" . $index . "";
+        $result = $connection->query($query);
+        while($row = $result->fetch_array()){
+          echo
+          "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>"; 
+          echo "Quantity: " . $cart_temp[$index];
+          echo "<br>Price: " . $row['price']; $total += $cart_temp[$index] * $row['price'];
+          echo
+          "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
+          echo
+          "<button class = 'button button2' onclick='RemoveFromCart(" . $row['itemID'] . ")'> Remove from cart </button>";
+        }
       }
+      echo "Total: $" . $total;
+      echo "<a href='checkout_page.php' class = 'button button2'>Click here to checkout</a>";
     }
-    echo "<a href='checkout.php' class = 'button button2'>Click here to checkout</a>";
+    else{
+      echo "Visit the storefront to create a cart!";
+    }
   }
 
   else{

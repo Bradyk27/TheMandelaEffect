@@ -56,6 +56,7 @@
 </head>
 
 <body style = 'background-color: aliceblue;'>
+<script src="logout_page.js"></script>
   <?php
   echo 
   "<section class = 'mysection'>

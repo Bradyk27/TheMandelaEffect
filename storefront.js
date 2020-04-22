@@ -1,7 +1,10 @@
 //STYLING: Display items better!
+if(localStorage.getItem["cart"]==null){
+    localStorage.setItem("cart", []);
+}
 cart = localStorage.getItem("cart").split(',');
-if(cart==null){
-    cart=[];
+if(cart[0] == ""){
+    cart = []
 }
 
 function AddToCart(item_id){

@@ -197,6 +197,7 @@ input[type=password] {
     if(isset($_POST['addcard'])){
       $query = "INSERT INTO payment_methods VALUES ('" . $_SESSION['username'] . "' ,  '" . $_POST['card'] . "') ON DUPLICATE KEY UPDATE cardno=cardno";
       $result = $conn->query($query);
+      header("Refresh:0");
     }
  
     echo $error_card . "
@@ -220,14 +221,12 @@ input[type=password] {
     if($result->num_rows){
       echo "Here are your currently existing orders (click to remove)<br>";
       while($row = $result->fetch_array()){
-        echo "<button onclick='RemoveOrder(" . $row['orderID'] . ")'> Total Price: " . $row['orderTotal'] . "<br>Quantity: " . $row['quantity'] . "<br>Shipping: " . $row['shipping'] . "</button><br>";
+        echo "<button onclick='RemoveOrder(" . $row['orderID'] . ")'> Total Price: " . $row['orderTotal'] . "<br>Quantity: " . $row['quantity'] . "<br></button><br>";
       }
     }
     else{
       echo "You have no orders! <br><br>";
     }
- 
-    ;
   }
   else{
     echo "Log in to access this area";
@@ -267,8 +266,8 @@ input[type=password] {
       quantity    INTEGER,
       PRIMARY KEY (itemID)
     )";
-  
     $result = $conn->query($query);
+    header("Refresh:0");
   }
   
   echo"
@@ -293,6 +292,7 @@ input[type=password] {
   ?>
   </body>
   <p style="font-style:italic">
+
 <?php
 if(isset($_SESSION['username'])){
   echo "<a href='logout_page.php' class = 'buttono button2'>Logout</a>";
@@ -301,5 +301,6 @@ else{
   echo "<a href='login_page.php' class = 'buttono button2'>Login</a>";
 }
 ?>
+
 <a href='storefront.php' class = 'buttono button2'>Click here to return to storefront</a>
 </html>

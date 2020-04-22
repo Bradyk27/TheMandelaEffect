@@ -79,11 +79,14 @@
   $query = "DROP TABLE orders";
   $result = $connection->query($query);
   $query = "CREATE TABLE orders (
-    orderID     VARCHAR(32),
+    orderID     INT AUTO_INCREMENT,
+    itemID      VARCHAR(32),
     username    VARCHAR(32),
     orderTotal  VARCHAR(32),
     quantity    VARCHAR(10),
-    shipping    VARCHAR(32)
+    cardno      VARCHAR(32),
+    order_address VARCHAR(256),
+    PRIMARY KEY(orderID)
   )";
 
   $result = $connection->query($query);
@@ -91,18 +94,18 @@
   if (!$result)
     die($connection->error);
 
-  add_order($connection, "0001", "pjones", "$23.85", "4", "2-day shipping");
-  add_order($connection, "0002", "pjones", "$13.99", "1", "standard shipping");
-  add_order($connection, "0003", "bsmith", "$35.79", "3", "standard shipping");
-  add_order($connection, "0004", "pjones", "$101.14", "11", "free shipping");
-  add_order($connection, "0005", "bsmith", "$189.75", "8", "free shipping");
-  add_order($connection, "0006", "pjones", "$24.89", "1", "1-day shipping");
-  add_order($connection, "0007", "bsmith", "$60.92", "7", "free shipping");
+  add_order($connection, "0001", "pjones", "$23.85", "4");
+  add_order($connection, "0002", "pjones", "$13.99", "1");
+  add_order($connection, "0001", "bsmith", "$35.79", "3");
+  add_order($connection, "0001", "pjones", "$101.14", "11");
+  add_order($connection, "0002", "bsmith", "$189.75", "8");
+  add_order($connection, "0002", "pjones", "$24.89", "1");
+  add_order($connection, "0002", "bsmith", "$60.92", "7");
 
-  function add_order($connection, $oid, $un, $ot, $qty, $sp)
+  function add_order($connection, $oid, $un, $ot, $qty)
   {
-    $query = "INSERT INTO orders (orderID, username, orderTotal, quantity, shipping)
-      VALUES ('$oid', '$un', '$ot', '$qty', '$sp')";
+    $query = "INSERT INTO orders (itemID, username, orderTotal, quantity)
+      VALUES ('$oid', '$un', '$ot', '$qty')";
 
     $result = $connection->query($query);
 
