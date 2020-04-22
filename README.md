@@ -2,7 +2,6 @@
 DCSP Project
 
 **TO DOS**
-
 FEATURES: DONE BY WEDNESDAY
 - Checkout Page
 - Search Bar

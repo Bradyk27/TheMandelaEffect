@@ -101,11 +101,11 @@ text-align: center; }
   }
 
   elseif($_SESSION['type'] == 'guest'){ //Cookied cart for guests via Javascript
-    $cart = $_SESSION['cart'];
-    if($cart=="" || (empty($cart)) || (!isset($cart))){
+    if((empty($cart)) || (!isset($cart))){
       echo "Visit the storefront to create a cart!";
     }
     else{
+      $cart = $_SESSION['cart'];
       $cart = explode(",", $cart);
       foreach($cart as $index){
         $query = "SELECT * FROM items WHERE itemID=" . $index . "";

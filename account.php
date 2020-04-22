@@ -293,6 +293,10 @@ input[type=password] {
   ?>
   </body>
   <p style="font-style:italic">
-<a href='logout_page.php' class = 'buttono button2'>Logout</a>
+<?php
+if(isset($_SESSION['username'])){
+  echo "<a href='logout_page.php' class = 'buttono button2'>Logout</a>";
+}
+?>
 <a href='storefront.php' class = 'buttono button2'>Click here to return to storefront</a>
 </html>

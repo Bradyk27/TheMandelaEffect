@@ -57,18 +57,23 @@
 
 <body style = 'background-color: aliceblue;'>
   <?php
+  echo 
+  "<section class = 'mysection'>
+  <h1 class = 'title'>The<span style='color:red; font-size:100px'>M</span>andela<span style='color:red; font-size: 100px'>E</span>ffect</h1>
+  </section>
+  <section class = 'mysection2'>
+  ";
   session_start();
+  if(isset($_SESSION['username'])){
+    echo
+    "<p class ='state'>
+    You are now logged out, please visit our site again.
+    </p>
+    ";
+  }
   session_unset();
   session_destroy();
   ?>
-<section class = 'mysection'>
-  <h1 class = 'title'>The<span style="color:red; font-size:100px">M</span>andela<span style="color:red; font-size: 100px">E</span>ffect</h1>
-</section>
-<section class = 'mysection2'>
-
-  <p class ='state'>
-    You are now logged out, please visit our site again.
-  </p>
 
   <p>
     <a href="login_page.php" class = 'button button2'>Log in</a>
