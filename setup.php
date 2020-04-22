@@ -2,9 +2,6 @@
   require_once 'login.php';
   $connection = new mysqli($hn, $un, $pw, $db);
 
-  if ($connection->connect_error)
-    die($connection->connect_error);
-
 // USERS
   $query = "DROP TABLE users";  
   $result = $connection->query($query);
@@ -17,8 +14,6 @@
     PRIMARY KEY(username)
   )";
   $result = $connection->query($query);
-  if (!$result)
-    die($connection->error);
 
   $salt1    = "qm&h*";
   $salt2    = "pg!@";
@@ -82,7 +77,7 @@
     orderID     INT AUTO_INCREMENT,
     itemID      VARCHAR(32),
     username    VARCHAR(32),
-    orderTotal  VARCHAR(32),
+    orderTotal  DECIMAL(4,2),
     quantity    VARCHAR(10),
     cardno      VARCHAR(32),
     order_address VARCHAR(256),
@@ -91,33 +86,11 @@
 
   $result = $connection->query($query);
 
-  if (!$result)
-    die($connection->error);
-
-  add_order($connection, "0001", "pjones", "$23.85", "4");
-  add_order($connection, "0002", "pjones", "$13.99", "1");
-  add_order($connection, "0001", "bsmith", "$35.79", "3");
-  add_order($connection, "0001", "pjones", "$101.14", "11");
-  add_order($connection, "0002", "bsmith", "$189.75", "8");
-  add_order($connection, "0002", "pjones", "$24.89", "1");
-  add_order($connection, "0002", "bsmith", "$60.92", "7");
-
-  function add_order($connection, $oid, $un, $ot, $qty)
-  {
-    $query = "INSERT INTO orders (itemID, username, orderTotal, quantity)
-      VALUES ('$oid', '$un', '$ot', '$qty')";
-
-    $result = $connection->query($query);
-
-    if(!$result)
-      die($connection->error);
-  }
-
   echo 'Test orders created and populated<br>';
 
   // ORDERS END
 
-  //Stock
+  //STOCK
 
   $connection = new mysqli($hn, $un, $pw, $db);
 
@@ -155,10 +128,10 @@
 
   echo 'Test items created and populated<br>';
 
-  // ORDERS END
+  // STOCK END
 
 
-  //Sample Cart
+  // CART
 
   $connection = new mysqli($hn, $un, $pw, $db);
 
@@ -178,9 +151,6 @@
 
   $result = $connection->query($query);
 
-  if (!$result)
-    die($connection->error);
-
   $query = "INSERT INTO bsmith SELECT * FROM items WHERE itemID=1";
   $result = $connection->query($query);
   $query = "UPDATE bsmith SET quantity = 1 WHERE itemID = 1";
@@ -190,8 +160,9 @@
 
   echo 'Test cart created and populated<br>';
 
+  // CART END
 
-  //Payment Methods
+  // PAYMENT METHODS
   $connection = new mysqli($hn, $un, $pw, $db);
 
   if ($connection->connect_error)
@@ -208,7 +179,7 @@
 
   echo 'Payment_methods created and populated<br>';
 
-
+  // PAYMENT METHODS END
 
 
   $connection->close();
