@@ -77,6 +77,7 @@ input[type=text] {
 <section class="mysection2">
 
   <?php
+    //Essentially just the same login page as was created for a lab
      session_start();
      require_once('login.php');
      $error1 = "";

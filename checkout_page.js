@@ -1,4 +1,6 @@
-function PlaceOrder(buttonid){ //Removes payment method by posting to a edit_payment.php which handles server side
+
+//Contains various button functions for placing orders
+function PlaceOrder(buttonid){ //Places orders for users
     var cardno = document.getElementById(buttonid).innerHTML;
     var address = prompt("Enter your address");
     $.post("checkout_payment.php",
@@ -12,7 +14,7 @@ function PlaceOrder(buttonid){ //Removes payment method by posting to a edit_pay
     });
 }
 
-function PlaceOrderGuest(){
+function PlaceOrderGuest(){ //Places orders for guests who haven't any payment methods
     var cardno = prompt("Please enter your card #");
     var address = prompt("Enter your address");
     $.post("checkout_payment.php",

@@ -1,16 +1,16 @@
-cart = localStorage.getItem("cart");
+cart = localStorage.getItem("cart"); //Create & post cart for guests if it does not yet exist.
 if(cart == null){
     cart = [];
 }
 else{
     cart = cart.split(',');
 }
-
 $.post("cart_guest.php",
       {cart: cart.join(",")},
       function(result){
       });
 
+//Add and remove from cart which logic-checking for guests (users get a unique database table, guests get cookied carts)
 function AddToCart(item_id){
   var user = document.getElementById("AddToCart").getAttribute("user");
   if(user=='guest'){

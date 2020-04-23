@@ -1,4 +1,5 @@
 <?php
+    //Massive switch statement that handles all payment creations & stock updates
     session_start();
     require_once 'login.php';
     $connection = new mysqli($hn, $un, $pw, $db);

@@ -58,6 +58,7 @@
 <body style = 'background-color: aliceblue;'>
 <script src="logout_page.js"></script>
   <?php
+  //Again, essentially the same as the lab.
   echo 
   "<section class = 'mysection'>
   <h1 class = 'title'>The<span style='color:red; font-size:100px'>M</span>andela<span style='color:red; font-size: 100px'>E</span>ffect</h1>

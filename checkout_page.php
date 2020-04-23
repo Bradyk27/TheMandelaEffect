@@ -87,7 +87,7 @@ text-align: center; }
     $connection = new mysqli($hn, $un, $pw, $db);
     session_start();
 
-    if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){ //Databased cart for user / admin
+    if($_SESSION['type'] == 'user' || $_SESSION['type'] == 'admin'){ //Databased cart for user / admin with ability to check out
         $_SESSION['total'] = 0;
         $query = "SELECT * FROM " . $_SESSION['username'] . "";
         $result = $connection->query($query);
@@ -116,7 +116,7 @@ text-align: center; }
         }
     }
 
-    elseif($_SESSION['type'] == 'guest'){ //Cookied cart for guests via Javascript
+    elseif($_SESSION['type'] == 'guest'){ //Cookied cart for guests via Javascript with check out button
         if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
             $total = 0;
             $cart = $_SESSION['cart'];

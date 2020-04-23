@@ -1,4 +1,5 @@
 <?php
+//Very, VERY basic create account. Prone to plenty of entry sanitation. 
 echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> CREATE ACCOUNT </h1>";
 require_once('login.php');
 $conn = new mysqli($hn, $un, $pw, $db);

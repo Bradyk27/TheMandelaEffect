@@ -90,7 +90,7 @@
 </body>
 <section class = 'mysection2'>
 <?php
-//The basic storefront. Lots of styling yet to do, but all the backend is here.
+//Storefront carbon copy that searches based on LIKE terms. Created so that the storefront wouldn't be broken by an empty query (if a search hasn't yet happened.) This is one of many workarounds, but, again, it works.
 session_start();
 require_once('login.php');
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -99,14 +99,13 @@ if(isset($_SESSION['username'])){
   echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'>Welcome " . $_SESSION['username'] . " </h1>";
 }
 else{
-  session_unset();
   $_SESSION['type'] = 'guest';
   echo "<h1>Welcome Guest </h1>";
 }
 
 echo "<p style = 'font-family: Impact, Charcoal, sans-serif; font-size: 25px; color: navy;'>We currently have the following items:</p>";
 
-$query = "SELECT * FROM items WHERE quantity > 0";
+$query = $_SESSION['query'];
 $result = $conn->query($query);
 
 if($result->num_rows){

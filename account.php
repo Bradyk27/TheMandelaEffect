@@ -235,7 +235,7 @@ input[type=password] {
 
 
   <?php
-  if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin'){
+  if(isset($_SESSION['type']) && $_SESSION['type'] == 'admin'){ //Ability to add / delete users AND update stock for admins only
     echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> Add/Delete Users</h1>";
     $query = "SELECT * FROM users";
     $result = $conn->query($query);
@@ -251,49 +251,81 @@ input[type=password] {
       echo "You have no users! <br><br>";
     }
   
-  if(isset($_POST['add_user'])){
-    $salt1 = "qm&h*";
-    $salt2 = "pg!@";
-    $password = $_POST['password_admin'];
-    $hash_password = hash('ripemd128', "$salt1$password$salt2");
+    if(isset($_POST['add_user'])){
+      $salt1 = "qm&h*";
+      $salt2 = "pg!@";
+      $password = $_POST['password_admin'];
+      $hash_password = hash('ripemd128', "$salt1$password$salt2");
 
-    $query = "INSERT INTO users(username, pw, type) VALUES('" . $_POST['username_admin'] . "','" . $hash_password . "','" . $_POST['type_admin'] . "')";
-    $result = $conn->query($query);
-    $query = "CREATE TABLE " . $_POST['username_admin'] . "(
-      itemID     INTEGER,
-      image_link    VARCHAR(1028),
-      item_name   VARCHAR(256),
-      quantity    INTEGER,
-      PRIMARY KEY (itemID)
-    )";
-    $result = $conn->query($query);
-    header("Refresh:0");
-  }
+      $query = "INSERT INTO users(username, pw, type) VALUES('" . $_POST['username_admin'] . "','" . $hash_password . "','" . $_POST['type_admin'] . "')";
+      $result = $conn->query($query);
+      $query = "CREATE TABLE " . $_POST['username_admin'] . "(
+        itemID     INTEGER,
+        image_link    VARCHAR(1028),
+        item_name   VARCHAR(256),
+        quantity    INTEGER,
+        PRIMARY KEY (itemID)
+      )";
+      $result = $conn->query($query);
+      unset($_POST['add_user']);
+    }
   
-  echo"
-  <br>
-  <form method='post' action='account.php'>
-  <label>Username: </label>
-  <input type='text' name='username_admin' value = ''> <br>
-  <label>Password: </label>
-  <input type='password' name='password_admin' value = ''> <br>
-  <label>User Type (user / admin): </label>
-  <input type='text' name='type_admin' value = ''> <br>
-  <input type='submit' name='add_user' value='Add User' class = 'button button2'>
-  </form>
-  ";
-  }
+    echo"
+    <br>
+    <form method='post' action='account.php'>
+    <label>Username: </label>
+    <input type='text' name='username_admin' value = ''> <br>
+    <label>Password: </label>
+    <input type='password' name='password_admin' value = ''> <br>
+    <label>User Type (user / admin): </label>
+    <input type='text' name='type_admin' value = ''> <br>
+    <input type='submit' name='add_user' value='Add User' class = 'button button2'>
+    </form>
+    ";
 
-  elseif(isset($_SESSION['type']) && $_SESSION['type']=='user'){
-  echo"
-  <button onclick = 'DeleteAccountUser()' class = 'button button2'>Delete Account?</button>
-  ";
+    echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> Edit Stock </h1>";
+    $query = "SELECT * FROM items";
+    $result = $conn->query($query);
+    if($result->num_rows){
+      echo "Here is your currently existing stock<br>";
+      $i = 0;
+      while($row = $result->fetch_array()){
+        echo "ItemID: " . $row['itemID'] . " Item Name: " . $row['item_name'] . " Quantity: " . $row['quantity'] . " Price: " . $row['price'] . "<br>";
+        echo "<button id = Delete" . $i . " onclick='DeleteStock(" . $i . ")' item_id = " . $row['itemID'] . ">Remove Item</button><br>";
+        echo "<button id = Change" . $i . " onclick='ChangeStock(" . $i . ")' item_id = " . $row['itemID'] . ">Update Quantity</button><br>";
+        $i++;
+      }
+    }
+    else{
+      echo "You have no stock! <br><br>";
+    }
+  
+    if(isset($_POST['add_stock'])){
+      $query = "INSERT INTO items(image_link, item_name, quantity, price) VALUES('" . $_POST['image_url'] . "','" . $_POST['item_name'] . "','" . $_POST['quantity'] . "','" . $_POST['price'] . "')";
+      $result = $conn->query($query);
+      unset($_POST['add_stock']);
+    }
+  
+    echo"
+    <br>
+    <form method='post' action='account.php'>
+    <label>Item Name: </label>
+    <input type='text' name='item_name'> <br>
+    <label>Quantity: </label>
+    <input type='number' min='0' name='quantity'> <br>
+    <label>Price: : </label>
+    <input type='number' name='price' min='0' step='0.01'> <br>
+    <label>Item Image URL: </label>
+    <input type='text' name='image_url'> <br>
+    <input type='submit' name='add_stock' value='Add Item' class = 'button button2'>
+    </form>
+    ";
   }
   ?>
+
   </body>
   <p style="font-style:italic">
-
-<?php
+<?php //Logout / Login for guests or nonusers
 if(isset($_SESSION['username'])){
   echo "<a href='logout_page.php' class = 'buttono button2'>Logout</a>";
 }

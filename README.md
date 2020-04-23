@@ -2,16 +2,12 @@
 DCSP Project
 
 **TO DOS**
-FEATURES: DONE BY WEDNESDAY
-- Stock automatic updating
-- Search Bar
-- Catalog Update (Admins)
-- Commenting
 
 STYLING: DONE BY FRIDAY
 - Javascripting & CSS Styling (displaying quantities, item name, locations ,etc.)
 - Entry Sanitation & Appropriate errors
 - Cleaning up / commenting of code (movement to and from Javascript)
+- Better, more specific alerts
 
 BUGS: DONE BY SATURDAY
 - Load timing errors (#Refreshes & what not)
@@ -30,6 +26,9 @@ MAYBES:
 ACCOUNT.JS:
 - FEATURE: Alert on duplicate cards / nonexisting card / duplicate users
 - BUG: ERROR MESSAGES NOT RESETTING EVERY TIME
+- BUG: USERS & ITEMS BEING ENTERED SEVERAL TIMES ON REFRESHES
+- BUG: ITEMS NOT RELOADING PROPERLY
+
 
 CART.JS
 - BUG: CART REQUIRES EXTRA REFRESH / EMPTY CART BREAKS
