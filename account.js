@@ -1,5 +1,12 @@
+/*
+.______    __  ___ .______       __    __       _______. _______ 
+|   _  \  |  |/  / |   _  \     |  |  |  |     /       ||   ____|
+|  |_)  | |  '  /  |  |_)  |    |  |  |  |    |   (----`|  |__   
+|   _  <  |    <   |      /     |  |  |  |     \   \    |   __|  
+|  |_)  | |  .  \  |  |\  \----.|  `--'  | .----)   |   |  |____ 
+|______/  |__|\__\ | _| `._____| \______/  |_______/    |_______|
+                                                                */
 //All buttons here post the edit_payment.php page, then alert appropriate results
-
 function RemovePaymentMethod(buttonid){
     var cardno = document.getElementById(buttonid).innerHTML;
     $.post("edit_account.php",

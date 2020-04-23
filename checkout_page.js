@@ -1,4 +1,11 @@
-
+/*
+.______    __  ___ .______       __    __       _______. _______ 
+|   _  \  |  |/  / |   _  \     |  |  |  |     /       ||   ____|
+|  |_)  | |  '  /  |  |_)  |    |  |  |  |    |   (----`|  |__   
+|   _  <  |    <   |      /     |  |  |  |     \   \    |   __|  
+|  |_)  | |  .  \  |  |\  \----.|  `--'  | .----)   |   |  |____ 
+|______/  |__|\__\ | _| `._____| \______/  |_______/    |_______|
+                                                                */
 //Contains various button functions for placing orders
 function PlaceOrder(buttonid){ //Places orders for users
     var cardno = document.getElementById(buttonid).innerHTML;

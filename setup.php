@@ -1,4 +1,12 @@
 <?php
+/*
+.______    __  ___ .______       __    __       _______. _______ 
+|   _  \  |  |/  / |   _  \     |  |  |  |     /       ||   ____|
+|  |_)  | |  '  /  |  |_)  |    |  |  |  |    |   (----`|  |__   
+|   _  <  |    <   |      /     |  |  |  |     \   \    |   __|  
+|  |_)  | |  .  \  |  |\  \----.|  `--'  | .----)   |   |  |____ 
+|______/  |__|\__\ | _| `._____| \______/  |_______/    |_______|
+                                                                */
   //Initial setup for creation of test users and what not. Could certainly be cleaned up but eh, it works for testing purposes.
   require_once 'login.php';
   $connection = new mysqli($hn, $un, $pw, $db);

@@ -1,5 +1,13 @@
 <?php
-//Very, VERY basic create account. Prone to plenty of entry sanitation. 
+/*
+.______    __  ___ .______       __    __       _______. _______ 
+|   _  \  |  |/  / |   _  \     |  |  |  |     /       ||   ____|
+|  |_)  | |  '  /  |  |_)  |    |  |  |  |    |   (----`|  |__   
+|   _  <  |    <   |      /     |  |  |  |     \   \    |   __|  
+|  |_)  | |  .  \  |  |\  \----.|  `--'  | .----)   |   |  |____ 
+|______/  |__|\__\ | _| `._____| \______/  |_______/    |_______|
+                                                                */
+//Very, VERY basic create account. Prone to plenty of entry sanitation issues. 
 echo "<h1 style='color: steelblue; font-size: 50px;font-style: oblique'> CREATE ACCOUNT </h1>";
 require_once('login.php');
 $conn = new mysqli($hn, $un, $pw, $db);

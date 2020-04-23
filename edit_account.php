@@ -1,4 +1,12 @@
 <?php
+/*
+.______    __  ___ .______       __    __       _______. _______ 
+|   _  \  |  |/  / |   _  \     |  |  |  |     /       ||   ____|
+|  |_)  | |  '  /  |  |_)  |    |  |  |  |    |   (----`|  |__   
+|   _  <  |    <   |      /     |  |  |  |     \   \    |   __|  
+|  |_)  | |  .  \  |  |\  \----.|  `--'  | .----)   |   |  |____ 
+|______/  |__|\__\ | _| `._____| \______/  |_______/    |_______|
+                                                                */
 //Massive switch statement that essentially just handles database manipulation for accounts
     require_once 'login.php';
     $connection = new mysqli($hn, $un, $pw, $db);
