@@ -7,7 +7,6 @@ function PlaceOrder(buttonid){ //Removes payment method by posting to a edit_pay
      order_address: address},
     function(result){
         alert(result);
-        alert("Order Placed!");
         location.reload();
         return false;
     });
@@ -21,10 +20,16 @@ function PlaceOrderGuest(){
      type: 'guest',
      order_address: address},
     function(result){
-        alert(result);
-        alert("Order Placed!");
-        localStorage.clear();
-        location.reload();
-        return false;
+        if(result=="True"){
+            alert("Order placed!");
+            localStorage.clear();
+            location.reload();
+            return false;
+        }
+        else{
+            alert(result);
+            location.reload();
+            return false;
+        }
     });
 }

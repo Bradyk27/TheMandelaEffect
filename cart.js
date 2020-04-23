@@ -1,19 +1,15 @@
-//BUG: CART REQUIRES EXTRA REFRESH / EMPTY CART BREAKS
-//FEATURE: ADD OR REMOVE FROM CART BUTTON ON CART PAGE
-//STYLING: DISPLAY QUANTITY, ORGANIZE ITEMS
+cart = localStorage.getItem("cart");
+if(cart == null){
+    cart = [];
+}
+else{
+    cart = cart.split(',');
+}
 
-$(document).ready(function(){
-  cart = localStorage.getItem("cart").split(',');
-  if(cart==null){
-      cart=[];
-  }
-
-  $.post("cart_guest.php",
+$.post("cart_guest.php",
       {cart: cart.join(",")},
       function(result){
-        
       });
-});
 
 function AddToCart(item_id){
   var user = document.getElementById("AddToCart").getAttribute("user");

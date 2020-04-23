@@ -149,6 +149,7 @@ input[type=text] {
 
   <p style="font-style:italic">
   <a href="create_account.php" class = 'button button2'>Create Account</a>
+  <a href="storefront.php" class = 'button button2'>Head to the storefront</a>
   </section>
   </p>
 <section class="mysection2">

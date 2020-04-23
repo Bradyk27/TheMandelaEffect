@@ -1,10 +1,3 @@
-//TO DOS FOR ACCOUNT SCREEN
-//STYLING: Make it look all pretty and stuff :))
-//FEATURE: Entry sanitation (espeically on user creation)
-//FEATURE: Alert on duplicate cards / nonexisting card / duplicate users
-//BUG: ERROR MESSAGES NOT RESETTING EVERY TIME
-//BUG: Make sure carts and such are created for new users. Are they automatically created?
-
 function RemovePaymentMethod(buttonid){ //Removes payment method by posting to a edit_payment.php which handles server side
     var cardno = document.getElementById(buttonid).innerHTML;
     $.post("edit_payment.php",

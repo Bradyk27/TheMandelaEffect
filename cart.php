@@ -100,7 +100,7 @@ text-align: center; }
         echo
         "<img id=" . $row['itemID'] . " src=" . $row['image_link'] . " alt=" . $row['item_name'] . " width=128 height=128)></img>";
         echo "Quantity: " . $row['quantity'];
-        echo "<br>Price: " . $row['price']; $total += $row['price'];
+        echo "<br>Price: " . $row['price']; $total += $row['quantity'] * $row['price'];
         echo
         "<button class = 'button button2' onclick='AddToCart(" . $row['itemID'] . ")' user= " . $_SESSION['type'] . " id=AddToCart> Add to cart </button>";
         echo

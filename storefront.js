@@ -1,10 +1,9 @@
-//STYLING: Display items better!
-if(localStorage.getItem["cart"]==null){
-    localStorage.setItem("cart", []);
+cart = localStorage.getItem("cart");
+if(cart == null){
+    cart = [];
 }
-cart = localStorage.getItem("cart").split(',');
-if(cart[0] == ""){
-    cart = []
+else{
+    cart = cart.split(',');
 }
 
 function AddToCart(item_id){
@@ -12,6 +11,7 @@ function AddToCart(item_id){
     if(user=='guest'){
         cart.push(item_id.toString());
         localStorage.setItem("cart", cart);
+        alert("Item added to cart!");
         return;
     }
     $.post("edit_cart.php",
@@ -27,6 +27,7 @@ function RemoveFromCart(item_id){
     if(user=='guest'){
         cart.splice(cart.indexOf(item_id.toString()), 1);
         localStorage.setItem("cart", cart);
+        alert("Item removed from cart!");
         return;
     }
     $.post("edit_cart.php",

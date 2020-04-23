@@ -93,7 +93,7 @@ text-align: center; }
         $result = $connection->query($query);
         if($result->num_rows){
             while($row = $result->fetch_array()){
-                $_SESSION['total'] += $row['price'];
+                $_SESSION['total'] += $row['quantity'] * $row['price'];
             }
             echo "Total $:" . $_SESSION['total'];
             $error_card = "";
